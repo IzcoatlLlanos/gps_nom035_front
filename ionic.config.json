@@ -1,0 +1,7 @@
+{
+  "name": "frontNom035",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
