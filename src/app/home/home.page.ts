@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UsuariosService } from '../services/usuarios.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,17 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private usrService: UsuariosService) { }
 
+  ngOnInit(): void {
+    this.obtenerGerentes();
+  }
+
+  obtenerGerentes() {
+    this.usrService.getGerentes().subscribe(data => {
+      console.log(data);
+    }, error => {
+      console.log(error);
+    })
+  }
 }
