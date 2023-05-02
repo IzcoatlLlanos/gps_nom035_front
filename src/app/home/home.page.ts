@@ -14,7 +14,7 @@ import { IconColor } from '../models/icon-color';
 export class HomePage {
   @ViewChild('ionBusqueda') busqueda!: IonSearchbar;
   
-  enabled: boolean=true;
+  enabled: boolean=false;
   admin?: Usuario;
   usrToUpdate?: Usuario; //Toma el valor del indice cuando isModalUpdate es verdadero
   validationMessages;
@@ -83,8 +83,18 @@ export class HomePage {
   }
 
   ngOnInit(): void {
-    //this.obtenerGerentes();
-    //this.fGerentes = this.gerentes;
+    let IdUsuarioOK;
+    this.activatedRoute.paramMap.subscribe((params) => {
+      IdUsuarioOK = params.get('id');
+    });
+    IdUsuarioOK = IdUsuarioOK +'';
+    this.usrService.getUsuarioItem(IdUsuarioOK,'OK').subscribe( data => {
+      this.admin = data.userItem;
+      console.log(this.admin);
+      this.enabled=true;
+    });
+    
+    
   }
 
   public filter (dato: String) {
@@ -105,7 +115,6 @@ export class HomePage {
 
   obtenerGerentes() {
     this.usrService.getGerentes().subscribe(data => {
-      console.log(data);
       this.gerentes = data.gerList;
     }, error => {
       console.log(error);
@@ -251,6 +260,8 @@ export class HomePage {
       if (dismissFunction) dismissFunction(respuesta);
     });
   }
+
+
 
   private async presentToast(
     message: string,

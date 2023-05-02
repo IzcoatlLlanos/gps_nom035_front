@@ -16,8 +16,8 @@ export class UsuariosService {
     return this.http.get(this.url+'gerentes');
   }
 
-  getUsuarioItem(IdUsuarioOK: string): Observable<any> {
-    return this.http.get(this.url+IdUsuarioOK);
+  getUsuarioItem(IdUsuarioBK: string,keyType: string): Observable<any> {
+    return this.http.get(this.url+IdUsuarioBK+'?keyType='+keyType);
   }
 
   /*
