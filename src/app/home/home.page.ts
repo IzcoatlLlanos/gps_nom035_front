@@ -79,7 +79,7 @@ export class HomePage {
         {type: 'maxLength', message: 'LONGITUD invalida!'},
         {type: 'minLength', message: 'LONGITUD invalida!'}
       ]
-    }
+    };
   }
 
   ngOnInit(): void {
@@ -116,6 +116,7 @@ export class HomePage {
   obtenerGerentes() {
     this.usrService.getGerentes().subscribe(data => {
       this.gerentes = data.gerList;
+      this.fGerentes = this.gerentes;
     }, error => {
       console.log(error);
     })

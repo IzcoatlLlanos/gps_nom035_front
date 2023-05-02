@@ -1,0 +1,19 @@
+.contenedor-gerentes{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  #contenedor-gerentes-titulo {
+    font-style: oblique;
+    font-size: 19px;
+  }
+
+.error-message {
+  color: red;
+  font-size: 13px;
+  font-style: italic;
+}
+  

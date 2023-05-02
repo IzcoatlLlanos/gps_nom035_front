@@ -11,7 +11,7 @@
 
     <ion-row>
       <ion-col size="10">
-        <ion-searchbar placeholder="Buscar por nombre" #ionBusqueda>
+        <ion-searchbar placeholder="Buscar por nombre" (ionChange)="filterGerentes($event)" #ionBusqueda>
         </ion-searchbar>
       </ion-col>
       <ion-col size="2">
@@ -61,7 +61,7 @@
               </ion-row>
             </ion-grid>
           </div>
-          <ion-item-sliding *ngFor="let g of gerentes">
+          <ion-item-sliding *ngFor="let g of fGerentes">
             <ion-item>
               <div class="contenedor-gerentes">
                 <ion-grid fixed>

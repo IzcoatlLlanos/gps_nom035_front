@@ -5,11 +5,11 @@ describe('HomeGerentePage', () => {
   let component: HomeGerentePage;
   let fixture: ComponentFixture<HomeGerentePage>;
 
-  beforeEach(async(() => {
+  beforeEach(async() => {
     fixture = TestBed.createComponent(HomeGerentePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

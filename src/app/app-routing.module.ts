@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'homeGerente',
+    redirectTo: 'log-in',
     pathMatch: 'full'
   },
   {
@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'homeGerente/:id',
     loadChildren: () => import('./home-gerente/home-gerente.module').then( m => m.HomeGerentePageModule)
-  },
+  }
 ];
 
 @NgModule({
