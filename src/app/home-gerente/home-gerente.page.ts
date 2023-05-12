@@ -138,6 +138,7 @@ export class HomeGerentePage implements OnInit {
     ).toUpperCase();
     newPersona.IdPersonaOK = defaultPersonaId;
     newPersona.Hotel = this.admin?.Hotel;
+    alert(this.admin?.Hotel);
 
     this.prsService.postPersonaItem(newPersona).subscribe( data => {
       if (data.success){
@@ -189,6 +190,9 @@ export class HomeGerentePage implements OnInit {
     const idRespuestaOK = prs.IdPersonaOK+'_'+fecha.getDay()+'_'+fecha.getMonth()+'_'+fecha.getFullYear()+'-'+1;
     const enlace = 'http://localhost:8100/responder/'+idRespuestaOK;
 
+    const idRespuestaOK2 = prs.IdPersonaOK+'_'+fecha.getDay()+'_'+fecha.getMonth()+'_'+fecha.getFullYear()+'-'+guia;
+    const enlace2 = 'http://localhost:8100/responder/'+idRespuestaOK2;
+
     let respuesta: Respuesta = {
       IdRespuestaOK: idRespuestaOK,
       IdPersonaOK: prs.IdPersonaOK,
@@ -213,25 +217,23 @@ export class HomeGerentePage implements OnInit {
       this.prsService.pushEncuestaItem(prs.IdPersonaOK, idRespuestaOK, encuesta1).subscribe( data => {
         console.log(data);
       });
+      this.cargarPersonas();
       const phoneNumber = '+52'+prs.Celular;
       const message = 'Hola por este medio te hacemos llegar la encuesta del hotel '+prs.Hotel+
-        ' la cual la encontrarás en el siguiente enlace: '+enlace;
+        ' la cual la encontrarás en el siguiente enlace: '+enlace+' y '+enlace2;
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
       window.open(whatsappUrl, '_blank');   
     });
-
-    const idRespuestaOK2 = prs.IdPersonaOK+'_'+fecha.getDay()+'_'+fecha.getMonth()+'_'+fecha.getFullYear()+'-'+guia;
-    const enlace2 = 'http://localhost:8100/responder/'+idRespuestaOK;
-
+    
     let respuesta2: Respuesta = {
-      IdRespuestaOK: idRespuestaOK,
+      IdRespuestaOK: idRespuestaOK2,
       IdPersonaOK: prs.IdPersonaOK,
-      IdEncuestaOK: '1',
+      IdEncuestaOK: guia+'',
       IdUsuarioOK: this.admin?.IdUsuarioOK+'',
       Hotel: this.admin?.Hotel+'',
       Contestada: false,
-      Enlace: enlace,
+      Enlace: enlace2,
       Puntuacion: 0
     };
 
@@ -244,15 +246,11 @@ export class HomeGerentePage implements OnInit {
     };
 
     this.resService.postRespuestaItem(respuesta2).subscribe( data => {
-      this.presentToast('Encuesta enviada con exito','success');
-      const phoneNumber = '+52'+prs.Celular;
-      const message = 'Hola por este medio te hacemos llegar la encuesta del hotel '+prs.Hotel+
-        ' la cual la encontrarás en el siguiente enlace: '+enlace2;
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-      window.open(whatsappUrl, '_blank');   
+      this.prsService.pushEncuestaItem(prs.IdPersonaOK, idRespuestaOK2, encuesta2).subscribe( data => {
+        console.log(data);
+      });
     });
-    this.cargarPersonas();
+    
 
   }
 

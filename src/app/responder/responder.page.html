@@ -5,9 +5,28 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">responder</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list *ngFor="let e of enc[0].Seccion">
+    <ion-item *ngFor="let p of e.Preguntas">
+      <ion-label>{{p.Pregunta}}</ion-label>
+      <ion-item *ngIf="e.Tipo === 'SI-NO' ">
+        <ion-select placeholder="Elija Una">
+          <ion-select-option value="1">SI</ion-select-option>
+          <ion-select-option value="0">NO</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="e.Tipo === '1-5' ">
+        <ion-select placeholder="Elija Una">
+          <ion-select-option value="1">POCO</ion-select-option>
+          <ion-select-option value="2">MUY POCO</ion-select-option>
+          <ion-select-option value="3">SI</ion-select-option>
+          <ion-select-option value="4">NO</ion-select-option>
+          <ion-select-option value="5">SI</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+    </ion-item>  
+  </ion-list>
+
 </ion-content>
+
+<!--*ngIf=" e.Tipo === 'SI-NO' "-->

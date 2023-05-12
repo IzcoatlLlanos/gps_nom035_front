@@ -37,17 +37,21 @@ export class LogInPage implements OnInit {
     const Clave = this.formularioLogin.controls['pwd'].value;
     this.usrService.getUsuarioItem(IdUsuarioBK,'BK').subscribe( data => {
       const logedUser: Usuario = data.userItem;
-      if (logedUser.Clave == Clave){
-        const Rol = logedUser.Rol;
-        if (Rol == '1') {
-          this.presentToast('Bienvenido Director '+ logedUser.Nombres,'success');
-          this.router.navigate(['/homeDirector',logedUser.IdUsuarioOK]);
-        }else if (Rol == '2') {
-          this.presentToast('Bienvenido Gerente '+ logedUser.Nombres,'success');
-          this.router.navigate(['/homeGerente',logedUser.IdUsuarioOK]);
+      if (!logedUser.Activo) {
+        this.presentToast('Cuenta inhabilitada', 'danger');
+      } else if (logedUser.Activo) {
+        if (logedUser.Clave == Clave){
+          const Rol = logedUser.Rol;
+          if (Rol == '1') {
+            this.presentToast('Bienvenido Director '+ logedUser.Nombres,'success');
+            this.router.navigate(['/homeDirector',logedUser.IdUsuarioOK]);
+          }else if (Rol == '2') {
+            this.presentToast('Bienvenido Gerente '+ logedUser.Nombres,'success');
+            this.router.navigate(['/homeGerente',logedUser.IdUsuarioOK]);
+          }
+        } else {
+          this.presentToast('Contraseña Incorrecta','danger');
         }
-      } else {
-        this.presentToast('Contraseña Incorrecta','danger');
       }
     } );
 

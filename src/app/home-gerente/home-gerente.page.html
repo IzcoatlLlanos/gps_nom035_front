@@ -83,10 +83,11 @@
             <!--(ionSwipe)=""-->
 
             <ion-item-options
+            *ngIf="getEstatusEncuesta(e).iconColor === 'danger'"
             side="start"
             expandable
             (click)="enviarEncuesta(e)">
-              <ion-item-option *ngIf="getEstatusEncuesta(e).iconColor === 'danger'" color="primary" >
+              <ion-item-option  color="primary" >
                 <ion-icon 
                   name="arrow-redo-outline"></ion-icon>
               </ion-item-option>

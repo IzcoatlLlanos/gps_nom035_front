@@ -6,7 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Persona } from '../models/persona';
 import { PersonasService } from '../services/personas.service';
 import { Usuario } from '../models/usuario';
+import { Encuesta } from '../models/encuesta';
 import { IconColor } from '../models/icon-color';
+import { EncuestasService } from '../services/encuestas.service';
+
 
 @Component({
   selector: 'app-responder',
@@ -15,7 +18,9 @@ import { IconColor } from '../models/icon-color';
 })
 export class ResponderPage implements OnInit {
 
+  enc: Encuesta[] = [];
   constructor(
+    private encService: EncuestasService,
     private prsService: PersonasService,
     private usrService: UsuariosService,
     private fb: FormBuilder,
@@ -24,7 +29,12 @@ export class ResponderPage implements OnInit {
     private modalController: ModalController,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    this.encService.getEncuestaItem('1').subscribe( data => {
+      this.enc = data.encuestasGuiasList;
+      console.log(this.enc);
+    });
+  }
 
   ngOnInit() {
     let idRespuestaOK;
