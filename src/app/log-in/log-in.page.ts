@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController,IonSelect,ModalController,ToastController } from '@ionic/angular';
 
+import { WhatsappService } from '../services/whatsapp.service';
 import { UsuariosService } from '../services/usuarios.service';
 import { Usuario } from '../models/usuario';
 
@@ -17,6 +18,7 @@ export class LogInPage implements OnInit {
   formularioLogin: FormGroup;
 
   constructor(
+    private wa: WhatsappService,
     private router: Router,
     public fb: FormBuilder,
     private usrService: UsuariosService,
@@ -53,9 +55,11 @@ export class LogInPage implements OnInit {
 
   logIn() {
     this.validateLogIn();
+    
   }
 
   ngOnInit() {
+    
   }
 
   private async presentToast(

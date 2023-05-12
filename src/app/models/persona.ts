@@ -1,14 +1,15 @@
 export interface Persona {
-    IdPersonaOK: { type: String },
-    Nombres: { type: String },
-    Apellidos: { type: String },
-    CorreoEle: { type: String },
-    Celular: { type: String },
-    Encuestas: [{
-        IdEncuestaOK: { type: String },
-        Enlace: { type: String },
-        Contestada: { type: String },
-        IdRespuestaOK: { type: String },
-        Fecha:{ type: String }
+    IdPersonaOK: string,
+    Nombres: string,
+    Apellidos: string,
+    Hotel: string,
+    CorreoEle: string,
+    Celular: string,
+    Encuestas?: [{
+        IdRespuestaOK: string,
+        Enlace: string,
+        IdEncuestaOK: string,
+        Contestada: string,
+        Fecha: Date
     }],
 }

@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'homeGerente/:id',
     loadChildren: () => import('./home-gerente/home-gerente.module').then( m => m.HomeGerentePageModule)
+  },
+  {
+    path: 'responder/:id',
+    loadChildren: () => import('./responder/responder.module').then( m => m.ResponderPageModule)
   }
 ];
 

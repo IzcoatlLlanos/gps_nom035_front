@@ -141,7 +141,14 @@ export class HomePage {
     const generatedUser = this.createUser();
     this.usrService.addUser(generatedUser).subscribe( data => {
       this.presentToast('Se agregó con exito el usuario','success');
+      const phoneNumber = '+52'+generatedUser.Celular;
+      const message = 'Hola te saluda la asociación de Hoteles y Moteles de Tepic Nayarit para informarte '+
+        'que puedes acceder a tu cuenta con el usuario: *'+generatedUser.IdUsuarioBK+'* siendo el mismo la contraseña.';
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(whatsappUrl, '_blank');        
       this.obtenerGerentes();
+
     }, error => {
       this.presentToast('Ocurrió un error en la inserción', 'danger');
       console.log(error);
