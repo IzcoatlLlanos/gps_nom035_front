@@ -6,7 +6,7 @@ export interface Respuesta {
     Hotel           : string,
     Contestada      : boolean,
     Enlace          : string,
-    Puntuacion      : number,
+    Puntuacion      : string,
     Seccion?         : [{
         IdSeccionOK     : string,
         Nombre          : string,

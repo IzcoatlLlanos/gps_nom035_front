@@ -19,4 +19,8 @@ export class RespuestaService {
   postRespuestaItem(respuestaItem: Respuesta): Observable <any> {
     return this.http.post(this.url, respuestaItem);
   }
+
+  getRespuestaItem(idRespuestaOK: string): Observable<any> {
+    return this.http.get(this.url+idRespuestaOK);
+  }
 }

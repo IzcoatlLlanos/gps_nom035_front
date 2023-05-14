@@ -13,6 +13,10 @@ export class PersonasService {
 
   constructor(private http: HttpClient) { }
 
+  getPersonaItem(idPersonaOK: string): Observable<any> {
+    return this.http.get(this.url+'uno/'+idPersonaOK);
+  }
+
   getPersonasByHotel(hotel: string): Observable<any> {
     return this.http.get(this.url+hotel);
   }

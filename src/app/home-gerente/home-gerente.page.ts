@@ -201,7 +201,7 @@ export class HomeGerentePage implements OnInit {
       Hotel: this.admin?.Hotel+'',
       Contestada: false,
       Enlace: enlace,
-      Puntuacion: 0
+      Puntuacion: '0'
     };
     let encuesta1: EncuestaPersona = {
       IdRespuestaOK: idRespuestaOK,
@@ -234,7 +234,7 @@ export class HomeGerentePage implements OnInit {
       Hotel: this.admin?.Hotel+'',
       Contestada: false,
       Enlace: enlace2,
-      Puntuacion: 0
+      Puntuacion: '0'
     };
 
     let encuesta2: EncuestaPersona = {

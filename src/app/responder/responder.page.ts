@@ -9,6 +9,8 @@ import { Usuario } from '../models/usuario';
 import { Encuesta } from '../models/encuesta';
 import { IconColor } from '../models/icon-color';
 import { EncuestasService } from '../services/encuestas.service';
+import { RespuestaService } from '../services/respuesta.service';
+import { Respuesta } from '../models/respuesta';
 
 
 @Component({
@@ -18,8 +20,12 @@ import { EncuestasService } from '../services/encuestas.service';
 })
 export class ResponderPage implements OnInit {
 
+  ngForm: FormGroup;
+
   enc: Encuesta[] = [];
+  res?: Respuesta;
   constructor(
+    private resService: RespuestaService,
     private encService: EncuestasService,
     private prsService: PersonasService,
     private usrService: UsuariosService,
@@ -30,17 +36,39 @@ export class ResponderPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.encService.getEncuestaItem('1').subscribe( data => {
-      this.enc = data.encuestasGuiasList;
-      console.log(this.enc);
-    });
+    this.ngForm = this.fb.group({});
+    
   }
 
   ngOnInit() {
-    let idRespuestaOK;
     this.activatedRoute.paramMap.subscribe((params) => {
-      idRespuestaOK = params.get('id');
+      const idRespuestaOK = params.get('id');
+      this.cargarRespuesta(idRespuestaOK+'');
+    });
+
+    
+    this.enc[0].Seccion.forEach((seccion, i) => {
+      seccion.Preguntas.forEach((pregunta, j) => {
+        this.ngForm.addControl(`respuesta ${i}-${j}`, this.fb.control(null));
+      });
+    });
+    
+  }
+
+  enviarFormularios() {
+    console.log(this.ngForm.value);
+  }
+
+  cargarRespuesta(idRespuestaOK: string) {
+    this.resService.getRespuestaItem(idRespuestaOK).subscribe( data => {
+      this.res = data.respuestaItem;
+      this.encService.getEncuestaItem(data.respuestaItem.IdEncuestaOK+'').subscribe( data => {
+        this.enc = data.encuestaGuiaItem;
+        console.log(data);
+      });
     });
   }
+
+  
 
 }

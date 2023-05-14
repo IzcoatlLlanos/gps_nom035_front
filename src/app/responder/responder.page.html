@@ -1,31 +1,46 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>responder</ion-title>
+    <ion-title>{{res?.IdRespuestaOK}}</ion-title>
   </ion-toolbar>
 </ion-header>
-
+<!--[formGroup]=""-->
 <ion-content [fullscreen]="true">
-  <ion-list *ngFor="let e of enc[0].Seccion">
-    <ion-item *ngFor="let p of e.Preguntas">
-      <ion-label>{{p.Pregunta}}</ion-label>
-      <ion-item *ngIf="e.Tipo === 'SI-NO' ">
-        <ion-select placeholder="Elija Una">
-          <ion-select-option value="1">SI</ion-select-option>
-          <ion-select-option value="0">NO</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item *ngIf="e.Tipo === '1-5' ">
-        <ion-select placeholder="Elija Una">
-          <ion-select-option value="1">POCO</ion-select-option>
-          <ion-select-option value="2">MUY POCO</ion-select-option>
-          <ion-select-option value="3">SI</ion-select-option>
-          <ion-select-option value="4">NO</ion-select-option>
-          <ion-select-option value="5">SI</ion-select-option>
-        </ion-select>
-      </ion-item>
-      
-    </ion-item>  
-  </ion-list>
+  <form [formGroup]="ngForm">
+    <ion-list *ngFor="let e of enc[0].Seccion; let i=index" class="cuestionarioP" >
+    
+      <ion-label class="titulo-seccion">{{e.Nombre}} {{i}}</ion-label>
+        <ion-list *ngFor="let p of e.Preguntas; let j=index" class="pregunta-seccion">
+          
+            <ion-label>{{p.Pregunta}}{{j}}</ion-label>
+            <ion-item *ngIf="e.Tipo === 'SI-NO' ">
+              <ion-select formControlName="respuesta {{i}}-{{j}}" placeholder="Elija Una">
+                <ion-select-option value="1">SI</ion-select-option>
+                <ion-select-option value="0">NO</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="e.Tipo === '4-0' ">
+              <ion-select formControlName="respuesta {{i}}-{{j}}" placeholder="4-0">
+                <ion-select-option value="0">SIEMPRE</ion-select-option>
+                <ion-select-option value="1">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="2">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="3">CASI NUNCA</ion-select-option>
+                <ion-select-option value="4">NUNCA</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="e.Tipo === '0-4' ">
+              <ion-select formControlName="respuesta {{i}}-{{j}}" placeholder="0-4">
+                <ion-select-option value="4">SIEMPRE</ion-select-option>
+                <ion-select-option value="3">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="2">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="1">CASI NUNCA</ion-select-option>
+                <ion-select-option value="0">NUNCA</ion-select-option>
+              </ion-select>
+            </ion-item>
+        
+        </ion-list>
+    
+    </ion-list>
+  </form>
 
 </ion-content>
 
