@@ -19,6 +19,9 @@ import { EncuestaPersona } from '../models/encuesta-persona';
 })
 export class HomeGerentePage implements OnInit {
 
+  
+  personaResultados?: Persona;
+  resultadosPersona: Respuesta[] = [];
   enabled: boolean=false;
   admin?: Usuario;
   usrToUpdate?: Usuario; //Toma el valor del indice cuando isModalUpdate es verdadero
@@ -28,6 +31,7 @@ export class HomeGerentePage implements OnInit {
   formPwd: FormGroup;
   isModalOpen = false;
   isModalUpdate = false;
+  isModalResult = false;
   public empleados: Persona[] = [];
   public fEmpleados: Persona[] = [];
 
@@ -97,6 +101,136 @@ export class HomeGerentePage implements OnInit {
     this.cargarAdmin(IdUsuarioOK); 
   }
 
+  interpretarResultadosGuia2y3(valor: number, guia: string) : IconColor{
+    if (guia == '2') {
+      if (valor>=90) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'danger',
+          msj: 'Muy Alto'
+        };
+      } else if (valor>=70 && valor<90) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'warning',
+          msj: 'Alto'
+        };
+      } else if (valor>=45 && valor<70) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'warning',
+          msj: 'Medio'
+        };
+      } else if (valor>=20 && valor<45) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'success',
+          msj: 'Bajo'
+        };
+      } else if (valor<20) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'primary',
+          msj: 'Nulo o despreciable'
+        };
+      }
+    } else if (guia == '3') {
+      if (valor>=140) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'danger',
+          msj: 'Muy Alto'
+        };
+      } else if (valor>=99 && valor<140) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'warning',
+          msj: 'Alto'
+        };
+      } else if (valor>=75 && valor<99) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'warning',
+          msj: 'Medio'
+        };
+      } else if (valor>=50 && valor<75) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'success',
+          msj: 'Bajo'
+        };
+      } else if (valor<50) {
+        return {
+          iconName: 'alert-outline',
+          iconColor: 'primary',
+          msj: 'Nulo o despreciable'
+        };
+      }
+    }
+    return {
+      iconName: 'alert-outline',
+      iconColor: 'primary',
+      msj: '?'
+    };
+  }
+
+  interpretarResultadoSeccion1(valor: number, seccion: number): IconColor{
+    switch (seccion) {
+      case 0:
+          if (valor >= 1) return {
+            iconName: 'alert-outline',
+            iconColor: 'warning',
+            msj: 'Requiere valoración clinica'
+          };
+          else return {
+            iconName: 'heart-outline',
+            iconColor: 'success',
+            msj: 'OK'
+          };
+        break;
+      case 1:
+          if (valor >= 1) return {
+            iconName: 'alert-outline',
+            iconColor: 'warning',
+            msj: 'Requiere valoración clinica'
+          };
+          else return {
+            iconName: 'heart-outline',
+            iconColor: 'success',
+            msj: 'OK'
+          };
+        break;
+      case 2:
+          if (valor >= 3) return {
+            iconName: 'alert-outline',
+            iconColor: 'warning',
+            msj: 'Requiere valoración clinica'
+          };
+          else return {
+            iconName: 'heart-outline',
+            iconColor: 'success',
+            msj: 'OK'
+          };
+        break;
+      case 3:
+          if (valor >= 2) return {
+            iconName: 'alert-outline',
+            iconColor: 'warning',
+            msj: 'Requiere valoración clinica'
+          };
+          else return {
+            iconName: 'heart-outline',
+            iconColor: 'success',
+            msj: 'OK'
+          };
+        break;
+    }
+    return {
+      iconName: 'heart-outline',
+      iconColor: 'success',
+      msj: 'OK'
+    };
+  }
   
 
   isOpenAndUpdate(isModal: boolean, isToUpdate: boolean) {
@@ -172,10 +306,19 @@ export class HomeGerentePage implements OnInit {
   }
 
   getEstatusEncuesta(prs: Persona): IconColor{
+    
    if(prs.Encuestas){
     const encuestas = prs.Encuestas.length;
-    if (encuestas <= 0) return {iconName: 'close-circle', iconColor: 'danger', msj:'Pendiente'};
-    else if (encuestas >= 1 ) return {iconName: 'checkmark-circle', iconColor: 'success', msj:'Contestada'};
+    if (encuestas <= 0) return {iconName: 'close-circle', iconColor: 'danger', msj:'No enviada'};
+    else if (encuestas >= 1 ) {
+      const currentDate = new Date();
+      const twoYearsAgo = new Date(currentDate.getFullYear() - 2, currentDate.getMonth(), currentDate.getDate());
+      if(!(prs.Encuestas[encuestas-1].Contestada) || !(prs.Encuestas[encuestas-2].Contestada)) {
+        return {iconName: 'close-circle', iconColor: 'warning', msj:'pendiente'};
+      }else if ((prs.Encuestas[encuestas-1].Contestada) && (prs.Encuestas[encuestas-2].Contestada)) {
+        return {iconName: 'checkmark-circle', iconColor: 'success', msj:'Contestada'};
+      }
+    }
    }
    return {iconName: 'checkmark-circle', iconColor: 'primary', msj:'?'};
   }
@@ -201,7 +344,7 @@ export class HomeGerentePage implements OnInit {
       Hotel: this.admin?.Hotel+'',
       Contestada: false,
       Enlace: enlace,
-      Puntuacion: '0'
+      Puntuacion: 0
     };
     let encuesta1: EncuestaPersona = {
       IdRespuestaOK: idRespuestaOK,
@@ -211,21 +354,6 @@ export class HomeGerentePage implements OnInit {
       Fecha: fecha
     };
 
-    this.resService.postRespuestaItem(respuesta).subscribe( data => {
-
-      this.presentToast('Encuesta enviada con exito','success');
-      this.prsService.pushEncuestaItem(prs.IdPersonaOK, idRespuestaOK, encuesta1).subscribe( data => {
-        console.log(data);
-      });
-      this.cargarPersonas();
-      const phoneNumber = '+52'+prs.Celular;
-      const message = 'Hola por este medio te hacemos llegar la encuesta del hotel '+prs.Hotel+
-        ' la cual la encontrarás en el siguiente enlace: '+enlace+' y '+enlace2;
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-      window.open(whatsappUrl, '_blank');   
-    });
-    
     let respuesta2: Respuesta = {
       IdRespuestaOK: idRespuestaOK2,
       IdPersonaOK: prs.IdPersonaOK,
@@ -234,7 +362,7 @@ export class HomeGerentePage implements OnInit {
       Hotel: this.admin?.Hotel+'',
       Contestada: false,
       Enlace: enlace2,
-      Puntuacion: '0'
+      Puntuacion: 0
     };
 
     let encuesta2: EncuestaPersona = {
@@ -245,13 +373,24 @@ export class HomeGerentePage implements OnInit {
       Fecha: fecha
     };
 
-    this.resService.postRespuestaItem(respuesta2).subscribe( data => {
-      this.prsService.pushEncuestaItem(prs.IdPersonaOK, idRespuestaOK2, encuesta2).subscribe( data => {
-        console.log(data);
+    this.resService.postRespuestaItem(respuesta).subscribe( data => {
+      this.resService.postRespuestaItem(respuesta2).subscribe( data => {
+        this.prsService.pushEncuestaItem(prs.IdPersonaOK, idRespuestaOK, encuesta1).subscribe( data => {
+          console.log(data);
+          this.prsService.pushEncuestaItem(prs.IdPersonaOK, idRespuestaOK2, encuesta2).subscribe( data => {
+            console.log(data);
+          });
+        });
+        this.presentToast('Encuesta enviada con exito','success');
+        this.cargarPersonas();
+        const phoneNumber = '+52'+prs.Celular;
+        const message = 'Hola por este medio te hacemos llegar la encuesta del hotel '+prs.Hotel+
+          ' la cual la encontrarás en el siguiente enlace: '+enlace+' y '+enlace2;
+          const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+        window.open(whatsappUrl, '_blank');   
       });
     });
-    
-
   }
 
   
@@ -295,6 +434,17 @@ export class HomeGerentePage implements OnInit {
     }
   }
 
+  setModalResult(isOpen: boolean, prs?: Persona) {
+    if (prs){
+      this.personaResultados = prs;
+      this.resService.getRespuestaByidPersonaOK(prs.IdPersonaOK).subscribe( data => {
+        this.resultadosPersona = data.respuestaList;
+        console.log(data);
+      });
+    } 
+    this.isModalResult = isOpen;
+  }
+
 
 
     //PresentToast/ConfirmationDialog
@@ -332,6 +482,8 @@ export class HomeGerentePage implements OnInit {
         if (dismissFunction) dismissFunction(respuesta);
       });
     }
+
+    
   
   
   

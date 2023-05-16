@@ -83,6 +83,17 @@
             <!--(ionSwipe)=""-->
 
             <ion-item-options
+            *ngIf="getEstatusEncuesta(e).iconColor === 'success'"
+            side="start"
+            expandable
+            (click)="setModalResult(true, e)">
+              <ion-item-option  color="primary" >
+                <ion-icon name="document-text-outline"></ion-icon>
+              </ion-item-option>
+              
+            </ion-item-options>
+
+            <ion-item-options
             *ngIf="getEstatusEncuesta(e).iconColor === 'danger'"
             side="start"
             expandable
@@ -236,6 +247,56 @@
       </ion-header>
       <ion-content class="ion-padding">
         
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="isModalResult" [backdropDismiss]="false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Resultados de: {{personaResultados?.Nombres}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setModalResult(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-grid *ngFor="let r of resultadosPersona">
+          <ion-list *ngIf="r.IdEncuestaOK === '1'">
+            <ion-item>
+              <h1>Guia 1</h1>
+            </ion-item>
+            <ion-item *ngFor="let s of r.Seccion; let i=index">
+              <p>{{s.Nombre}}</p>
+              <ion-chip slot="end" [color]="interpretarResultadoSeccion1(s.Resultado,i).iconColor" outline="true">
+                <ion-icon [name]="interpretarResultadoSeccion1(s.Resultado,i).iconName"></ion-icon>
+                <p>{{interpretarResultadoSeccion1(s.Resultado,i).msj}}</p>
+              </ion-chip>
+            </ion-item>
+          </ion-list>
+
+          <ion-list *ngIf="r.IdEncuestaOK === '2'">
+            <ion-item>
+              <h1>Guia 2</h1>
+              <ion-chip slot="end" [color]="interpretarResultadosGuia2y3(r.Puntuacion,'2').iconColor" outline="true">
+                <ion-icon [name]="interpretarResultadosGuia2y3(r.Puntuacion,'2').iconName"></ion-icon>
+                <p>{{interpretarResultadosGuia2y3(r.Puntuacion,'2').msj}}</p>
+              </ion-chip>
+            </ion-item>
+          </ion-list>
+
+          <ion-list *ngIf="r.IdEncuestaOK === '2'">
+            <ion-item>
+              <h1>Guia 3</h1>
+              <ion-chip slot="end" [color]="interpretarResultadosGuia2y3(r.Puntuacion,'3').iconColor" outline="true">
+                <ion-icon [name]="interpretarResultadosGuia2y3(r.Puntuacion,'3').iconName"></ion-icon>
+                <p>{{interpretarResultadosGuia2y3(r.Puntuacion,'3').msj}}</p>
+              </ion-chip>
+            </ion-item>
+          </ion-list>
+          
+        </ion-grid>
       </ion-content>
     </ng-template>
   </ion-modal>

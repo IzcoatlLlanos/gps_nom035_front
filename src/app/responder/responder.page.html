@@ -1,47 +1,2281 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>{{res?.IdRespuestaOK}}</ion-title>
+    <ion-title>Hola {{prs?.Nombres}} {{prs?.Apellidos}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <!--[formGroup]=""-->
-<ion-content [fullscreen]="true">
-  <form [formGroup]="ngForm">
-    <ion-list *ngFor="let e of enc[0].Seccion; let i=index" class="cuestionarioP" >
-    
-      <ion-label class="titulo-seccion">{{e.Nombre}} {{i}}</ion-label>
-        <ion-list *ngFor="let p of e.Preguntas; let j=index" class="pregunta-seccion">
-          
-            <ion-label>{{p.Pregunta}}{{j}}</ion-label>
-            <ion-item *ngIf="e.Tipo === 'SI-NO' ">
-              <ion-select formControlName="respuesta {{i}}-{{j}}" placeholder="Elija Una">
-                <ion-select-option value="1">SI</ion-select-option>
-                <ion-select-option value="0">NO</ion-select-option>
-              </ion-select>
-            </ion-item>
-            <ion-item *ngIf="e.Tipo === '4-0' ">
-              <ion-select formControlName="respuesta {{i}}-{{j}}" placeholder="4-0">
-                <ion-select-option value="0">SIEMPRE</ion-select-option>
-                <ion-select-option value="1">CASI SIEMPRE</ion-select-option>
-                <ion-select-option value="2">ALGUNAS VECES</ion-select-option>
-                <ion-select-option value="3">CASI NUNCA</ion-select-option>
-                <ion-select-option value="4">NUNCA</ion-select-option>
-              </ion-select>
-            </ion-item>
-            <ion-item *ngIf="e.Tipo === '0-4' ">
-              <ion-select formControlName="respuesta {{i}}-{{j}}" placeholder="0-4">
-                <ion-select-option value="4">SIEMPRE</ion-select-option>
-                <ion-select-option value="3">CASI SIEMPRE</ion-select-option>
-                <ion-select-option value="2">ALGUNAS VECES</ion-select-option>
-                <ion-select-option value="1">CASI NUNCA</ion-select-option>
-                <ion-select-option value="0">NUNCA</ion-select-option>
-              </ion-select>
-            </ion-item>
-        
-        </ion-list>
-    
-    </ion-list>
+<ion-content *ngIf="!res?.Contestada" [fullscreen]="true">
+  <form *ngIf="res?.IdEncuestaOK === '1' " [formGroup]="guia1">
+    <H1>GUIA 1</H1>
+    <ion-grid fixed class="Seccion-1">
+      <ion-row>
+        <ion-col size="12">
+          <H2>Acontecimiento traumatico severo</H2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha presenciado o sufrido alguna vez, durante o con motivo del trabajo un 
+            acontecimiento como los siguientes: ¿Accidente que tenga como consecuencia la 
+            muerte, la pérdida de un miembro o una lesión grave? ¿Asaltos? ¿Actos violentos 
+            que derivaron en lesiones graves? Secuestro? Amenazas?, o Cualquier otro que 
+            ponga en riesgo su vida o salud, y/o la de otras personas?</p>
+            <ion-select formControlName="1_1" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('1_1')?.hasError(val.type)&&guia1.get('1_1')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <!--SECCION 2-->
+
+      <ion-row>
+        <ion-col size="12">
+          <H2>Recuerdos persistentes sobre el acontecimiento</H2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha tenido recuerdos recurrentes sobre el acontecimiento que le provocan malestares?</p>
+            <ion-select formControlName="2_1" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('2_1')?.hasError(val.type)&&guia1.get('2_1')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+            
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha tenido sueños de carácter recurrente sobre el acontecimiento, que le producen malestar?</p>
+            <ion-select formControlName="2_2" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('2_2')?.hasError(val.type)&&guia1.get('2_2')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <!--SECCION 3-->
+
+      <ion-row>
+        <ion-col size="12">
+          <H2>Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento</H2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Se ha esforzado por evitar todo tipo de sentimientos, conversaciones o situaciones que le puedan recordar el acontecimiento?</p>
+            <ion-select formControlName="3_1" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('3_1')?.hasError(val.type)&&guia1.get('3_1')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Se ha esforzado por evitar todo tipo de actividades, lugares o personas que motivanrecuerdos del acontecimiento?</p>
+            <ion-select formControlName="3_2" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('3_2')?.hasError(val.type)&&guia1.get('3_2')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha tenido dificultad para recordar alguna parte importante del evento?</p>
+            <ion-select formControlName="3_3" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('3_3')?.hasError(val.type)&&guia1.get('3_3')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha disminuido su interés en sus actividades cotidianas?</p>
+            <ion-select formControlName="3_4" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('3_4')?.hasError(val.type)&&guia1.get('3_4')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Se ha sentido usted alejado o distante de los demás?</p>
+            <ion-select formControlName="3_5" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('3_5')?.hasError(val.type)&&guia1.get('3_5')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha notado que tiene dificultad para expresar sus sentimientos?</p>
+            <ion-select formControlName="3_6" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('3_6')?.hasError(val.type)&&guia1.get('3_6')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha tenido la impresión de que su vida se va a acortar, que va a morir antes que otraspersonas o que tiene un futuro limitado?</p>
+            <ion-select formControlName="3_7" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('3_7')?.hasError(val.type)&&guia1.get('3_7')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <!--SECCION 4-->
+
+      <ion-row>
+        <ion-col size="12">
+          <H2>Afectacion</H2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha tenido usted dificultades para dormir?</p>
+            <ion-select formControlName="4_1" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('4_1')?.hasError(val.type)&&guia1.get('4_1')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha estado particularmente irritable o le han dado arranques de coraje?</p>
+            <ion-select formControlName="4_2" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('4_2')?.hasError(val.type)&&guia1.get('4_2')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha tenido dificultad para concentrarse?</p>
+            <ion-select formControlName="4_3" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('4_3')?.hasError(val.type)&&guia1.get('4_3')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Ha estado nervioso o constantemente en alerta?</p>
+            <ion-select formControlName="4_4" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('4_4')?.hasError(val.type)&&guia1.get('4_4')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>¿Se ha sobresaltado fácilmente por cualquier cosa?</p>
+            <ion-select formControlName="4_5" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="NO">NO</ion-select-option>
+              <ion-select-option value="SI">SI</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia1.get('4_5')?.hasError(val.type)&&guia1.get('4_5')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button (click)="enviarGuia_1()" color="success" expand="full" [disabled]="!guia1.valid">
+      Enviar encuesta
+    </ion-button>
   </form>
 
+  <form *ngIf="res?.IdEncuestaOK === '2' " [formGroup]="guia2">
+    <h1>Guia 2</h1>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <H2>Ambiente de trabajo</H2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Mi trabajo me exige hacer mucho esfuerzo físico</p>
+            <ion-select formControlName="1_1" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_1')?.hasError(val.type)&&guia2.get('1_1')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Me preocupa sufrir un accidente en mi trabajo</p>
+            <ion-select formControlName="1_2" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_2')?.hasError(val.type)&&guia2.get('1_2')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Considero que las actividades que realizo son peligrosas</p>
+            <ion-select formControlName="1_3" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_3')?.hasError(val.type)&&guia2.get('1_3')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Por la cantidad de trabajo que tengo debo quedarmetiempo adicional a mi turno</p>
+            <ion-select formControlName="1_4" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_4')?.hasError(val.type)&&guia2.get('1_4')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Por la cantidad de trabajo que tengo debo trabajar sin parar</p>
+            <ion-select formControlName="1_5" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_5')?.hasError(val.type)&&guia2.get('1_5')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Considero que es necesario mantener un ritmo de trabajoacelerado</p>
+            <ion-select formControlName="1_6" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_6')?.hasError(val.type)&&guia2.get('1_6')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Mi trabajo exige que esté muy concentrado</p>
+            <ion-select formControlName="1_7" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_7')?.hasError(val.type)&&guia2.get('1_7')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Mi trabajo exige que atienda varios asuntos al mismotiempo</p>
+            <ion-select formControlName="1_8" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_8')?.hasError(val.type)&&guia2.get('1_8')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>En mi trabajo soy responsable de cosas de mucho valor</p>
+            <ion-select formControlName="1_9" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_9')?.hasError(val.type)&&guia2.get('1_9')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Respondo ante mi jefe por los resultados de toda mi áreade trabajo</p>
+            <ion-select formControlName="1_10" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_10')?.hasError(val.type)&&guia2.get('1_10')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>En mi trabajo me dan órdenes contradictorias</p>
+            <ion-select formControlName="1_11" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_11')?.hasError(val.type)&&guia2.get('1_11')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Considero que en mi trabajo me piden hacer cosas innecesarias</p>
+            <ion-select formControlName="1_12" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_12')?.hasError(val.type)&&guia2.get('1_12')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Trabajo horas extras más de tres veces a la semana</p>
+            <ion-select formControlName="1_13" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_13')?.hasError(val.type)&&guia2.get('1_13')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Mi trabajo me exige laborar en días de descanso,festivos o fines de semana</p>
+          <ion-select formControlName="1_14" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_14')?.hasError(val.type)&&guia2.get('1_14')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Considero que el tiempo en el trabajo es mucho y perjudica mis actividades familiares o personales</p>
+          <ion-select formControlName="1_15" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_15')?.hasError(val.type)&&guia2.get('1_15')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Pienso en las actividades familiares o personales cuandoestoy en mi trabajo</p>
+          <ion-select formControlName="1_16" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_16')?.hasError(val.type)&&guia2.get('1_16')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Recibo críticas constantes a mi persona y/o trabajo</p>
+          <ion-select formControlName="1_17" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_17')?.hasError(val.type)&&guia2.get('1_17')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Recibo burlas, calumnias, difamaciones, humillacioneso ridiculizaciones</p>
+          <ion-select formControlName="1_18" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_18')?.hasError(val.type)&&guia2.get('1_18')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Se ignora mi presencia o se me excluye de las reuniones de trabajo y en la toma de decisiones</p>
+          <ion-select formControlName="1_19" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_19')?.hasError(val.type)&&guia2.get('1_19')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Se manipulan las situaciones de trabajo para hacerme parecer un mal trabajador</p>
+          <ion-select formControlName="1_20" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_20')?.hasError(val.type)&&guia2.get('1_20')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Se ignoran mis éxitos laborales y se atribuyen a otros trabajadores</p>
+          <ion-select formControlName="1_21" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_21')?.hasError(val.type)&&guia2.get('1_21')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Me bloquean o impiden las oportunidades que tengo para obtener ascenso o mejora en mi trabajo</p>
+          <ion-select formControlName="1_22" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_22')?.hasError(val.type)&&guia2.get('1_22')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>He presenciado actos de violencia en mi centro de trabajo</p>
+          <ion-select formControlName="1_23" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_23')?.hasError(val.type)&&guia2.get('1_23')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Atiendo clientes o usuarios muy enojados</p>
+          <ion-select formControlName="1_24" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_24')?.hasError(val.type)&&guia2.get('1_24')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Mi trabajo me exige atender personas muy necesitadas de ayuda o enfermas</p>
+          <ion-select formControlName="1_25" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia2.get('1_25')?.hasError(val.type)&&guia2.get('1_25')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Para hacer mi trabajo debo demostrar sentimientos distintos a los míos</p>
+            <ion-select formControlName="1_26" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia2.get('1_26')?.hasError(val.type)&&guia2.get('1_26')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Comunican tarde los asuntos de trabajo</p>
+              <ion-select formControlName="1_27" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia2.get('1_27')?.hasError(val.type)&&guia2.get('1_27')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Dificultan el logro de los resultados del trabajo</p>
+                <ion-select formControlName="1_28" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('1_28')?.hasError(val.type)&&guia2.get('1_28')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <p>Ignoran las sugerencias para mejorar su trabajo</p>
+                  <ion-select formControlName="1_29" placeholder="Seleccione una Opcion" interface="popover">
+                    <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                    <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                      <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                      <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                      <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                  </ion-select>
+                  <ng-container *ngFor="let val of validationMessages['general']">
+                    <div class="error-message" *ngIf="guia2.get('1_29')?.hasError(val.type)&&guia2.get('1_29')?.touched">
+                      {{val.message}}
+                    </div>
+                  </ng-container>
+              </ion-col>
+          </ion-row>
+
+          <!--SECCION 2-->
+
+          <ion-row>
+            <ion-col size="12">
+              <H2>Segunda seccion</H2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Mi trabajo permite que desarrolle nuevas habilidades</p>
+                <ion-select formControlName="2_1" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_1')?.hasError(val.type)&&guia2.get('2_1')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>En mi trabajo puedo aspirar a un mejor puesto</p>
+                <ion-select formControlName="2_2" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_2')?.hasError(val.type)&&guia2.get('2_2')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Durante mi jornada de trabajo puedo tomar pausas cuando las necesito</p>
+                <ion-select formControlName="2_3" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_3')?.hasError(val.type)&&guia2.get('2_3')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Puedo decidir la velocidad a la que realizo misactividades en mi trabajo</p>
+                <ion-select formControlName="2_4" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_4')?.hasError(val.type)&&guia2.get('2_4')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Puedo cambiar el orden de las actividades que realizo en mi trabajo</p>
+                <ion-select formControlName="2_5" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_5')?.hasError(val.type)&&guia2.get('2_5')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Me informan con claridad cuáles son mis funciones</p>
+                <ion-select formControlName="2_6" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_6')?.hasError(val.type)&&guia2.get('2_6')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Me explican claramente los resultados que debo obteneren mi trabajo</p>
+                <ion-select formControlName="2_7" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_7')?.hasError(val.type)&&guia2.get('2_7')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Me informan con quién puedo resolver problemas o asuntos de trabajo</p>
+                <ion-select formControlName="2_8" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_8')?.hasError(val.type)&&guia2.get('2_8')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Me permiten asistir a capacitaciones relacionadas con mi trabajo</p>
+                <ion-select formControlName="2_9" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_9')?.hasError(val.type)&&guia2.get('2_9')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Recibo capacitación útil para hacer mi trabajo</p>
+                <ion-select formControlName="2_10" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_10')?.hasError(val.type)&&guia2.get('2_10')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Mi jefe tiene en cuenta mis puntos de vista y opiniones</p>
+                <ion-select formControlName="2_11" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_11')?.hasError(val.type)&&guia2.get('2_11')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Mi jefe ayuda a solucionar los problemas que sepresentan en el trabajo</p>
+                <ion-select formControlName="2_12" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_12')?.hasError(val.type)&&guia2.get('2_12')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Puedo confiar en mis compañeros de trabajo</p>
+                <ion-select formControlName="2_13" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia2.get('2_13')?.hasError(val.type)&&guia2.get('2_13')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Cuando tenemos que realizar trabajo de equipo loscompañeros colaboran</p>
+              <ion-select formControlName="2_14" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia2.get('2_14')?.hasError(val.type)&&guia2.get('2_14')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Mis compañeros de trabajo me ayudan cuando tengodificultades</p>
+              <ion-select formControlName="2_15" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia2.get('2_15')?.hasError(val.type)&&guia2.get('2_15')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>En mi trabajo puedo expresarme libremente sininterrupciones</p>
+              <ion-select formControlName="2_16" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia2.get('2_16')?.hasError(val.type)&&guia2.get('2_16')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+
+    </ion-grid>
+    <ion-button (click)="enviarGuia_2()" expand="full" [disabled]="!guia2.valid">
+      Click me
+    </ion-button>
+  </form>
+
+  <form *ngIf="res?.IdEncuestaOK === '3' " [formGroup]="guia3">
+    <h1>Guia 3</h1>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <H2>Primera seccion</H2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>El espacio donde trabajo me permite realiar mis actividades de manera segura e higienica</p>
+            <ion-select formControlName="1_1" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_1')?.hasError(val.type)&&guia3.get('1_1')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Considero que en mi trabajo se aplican las normas de seguridad y salud en el trabajo</p>
+            <ion-select formControlName="1_2" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_2')?.hasError(val.type)&&guia3.get('1_2')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Mi trabajo permite que desarrolle nuevas habidilades</p>
+            <ion-select formControlName="1_3" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_3')?.hasError(val.type)&&guia3.get('1_3')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>En mi trabajo puedo aspirar a un mejor puesto</p>
+            <ion-select formControlName="1_4" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_4')?.hasError(val.type)&&guia3.get('1_4')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Durante mi jornada de trabajo puedo tomar pausa cuando las necesito</p>
+            <ion-select formControlName="1_5" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_5')?.hasError(val.type)&&guia3.get('1_5')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Puedo decidir cuanto trabajo realizo durante la jornada laboral</p>
+            <ion-select formControlName="1_6" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_6')?.hasError(val.type)&&guia3.get('1_6')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Puedo decidir la velocidad a la que realizo mis actividades en mi trabajo</p>
+            <ion-select formControlName="1_7" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_7')?.hasError(val.type)&&guia3.get('1_7')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>puedo cambiar el orden de las actividades que realizo en mi trabjao</p>
+            <ion-select formControlName="1_8" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_8')?.hasError(val.type)&&guia3.get('1_8')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Cuando se presentan cambios en mi trabajo se tienen en cuenta mis ideas o aportaciones</p>
+            <ion-select formControlName="1_9" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_9')?.hasError(val.type)&&guia3.get('1_9')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Me informan con claridad cuales son mis funciones</p>
+            <ion-select formControlName="1_10" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_10')?.hasError(val.type)&&guia3.get('1_10')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Me explican claramente los resultados que debo obtener en mi trabajo</p>
+            <ion-select formControlName="1_11" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_11')?.hasError(val.type)&&guia3.get('1_11')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Me explican claramente los objetivos de mi trabajo</p>
+            <ion-select formControlName="1_12" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_12')?.hasError(val.type)&&guia3.get('1_12')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Me informan con quien puedo resolver problemas o asuntos de trabajo</p>
+            <ion-select formControlName="1_13" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_13')?.hasError(val.type)&&guia3.get('1_13')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+      </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Me permiten asistir a capacitaciones relacionadas con mi trabajo</p>
+          <ion-select formControlName="1_14" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_14')?.hasError(val.type)&&guia3.get('1_14')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Recibo capacitacion util para hacer mi trabajo</p>
+          <ion-select formControlName="1_15" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_15')?.hasError(val.type)&&guia3.get('1_15')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Mi jefe ayuda a organizar mejor el trabajo</p>
+          <ion-select formControlName="1_16" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_16')?.hasError(val.type)&&guia3.get('1_16')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Mi jefe tiene en cuenta mis puntos de vista y opinioes</p>
+          <ion-select formControlName="1_17" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_17')?.hasError(val.type)&&guia3.get('1_17')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Mi jefe me comunica a tiempo la informacion relacionada con el trabajo</p>
+          <ion-select formControlName="1_18" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_18')?.hasError(val.type)&&guia3.get('1_18')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>La orientacion que me da mi jefe me ayuda a realizar mejor mi trabajo</p>
+          <ion-select formControlName="1_19" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_19')?.hasError(val.type)&&guia3.get('1_19')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Puedo confiar en mis compañeros de trabajo</p>
+          <ion-select formControlName="1_20" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_20')?.hasError(val.type)&&guia3.get('1_20')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Entre compañeros solucionamos los problemas detrabajo de forma respetuosa</p>
+          <ion-select formControlName="1_21" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_21')?.hasError(val.type)&&guia3.get('1_21')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>En mi trabajo me hacen sentir parte del grupo</p>
+          <ion-select formControlName="1_22" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_22')?.hasError(val.type)&&guia3.get('1_22')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Cuando tenemos que realizar trabajo de equipo los compañeros colaboran</p>
+          <ion-select formControlName="1_23" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_23')?.hasError(val.type)&&guia3.get('1_23')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Mis compañeros de trabajo me ayudan cuando tengo dificultades</p>
+          <ion-select formControlName="1_24" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_24')?.hasError(val.type)&&guia3.get('1_24')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p>Me informan sobre lo que hago bien en mi trabajo</p>
+          <ion-select formControlName="1_25" placeholder="Seleccione una Opcion" interface="popover">
+            <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+            <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+              <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+              <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+              <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+          </ion-select>
+          <ng-container *ngFor="let val of validationMessages['general']">
+            <div class="error-message" *ngIf="guia3.get('1_25')?.hasError(val.type)&&guia3.get('1_25')?.touched">
+              {{val.message}}
+            </div>
+          </ng-container>
+      </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>La forma como evalúan mi trabajo en mi centro de trabajo me ayuda a mejorar mi desempeño</p>
+            <ion-select formControlName="1_26" placeholder="Seleccione una Opcion" interface="popover">
+              <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+              <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+            </ion-select>
+            <ng-container *ngFor="let val of validationMessages['general']">
+              <div class="error-message" *ngIf="guia3.get('1_26')?.hasError(val.type)&&guia3.get('1_26')?.touched">
+                {{val.message}}
+              </div>
+            </ng-container>
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>En mi centro de trabajo me pagan a tiempo mi salario</p>
+              <ion-select formControlName="1_27" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('1_27')?.hasError(val.type)&&guia3.get('1_27')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>El pago que recibo es el que merezco por el trabajoque realizo</p>
+                <ion-select formControlName="1_28" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('1_28')?.hasError(val.type)&&guia3.get('1_28')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <p>Si obtengo los resultados esperados en mi trabajo merecompensan o reconocen</p>
+                  <ion-select formControlName="1_29" placeholder="Seleccione una Opcion" interface="popover">
+                    <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                    <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                      <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                      <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                      <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                  </ion-select>
+                  <ng-container *ngFor="let val of validationMessages['general']">
+                    <div class="error-message" *ngIf="guia3.get('1_29')?.hasError(val.type)&&guia3.get('1_29')?.touched">
+                      {{val.message}}
+                    </div>
+                  </ng-container>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Las personas que hacen bien el trabajo pueden crecerlaboralmente</p>
+                <ion-select formControlName="1_30" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('1_30')?.hasError(val.type)&&guia3.get('1_30')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Siento orgullo de laborar en este centro de trabajo</p>
+                <ion-select formControlName="1_31" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('1_31')?.hasError(val.type)&&guia3.get('1_31')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <p>Me siento comprometido con mi trabajo</p>
+                  <ion-select formControlName="1_32" placeholder="Seleccione una Opcion" interface="popover">
+                    <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                    <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                      <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                      <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                      <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                  </ion-select>
+                  <ng-container *ngFor="let val of validationMessages['general']">
+                    <div class="error-message" *ngIf="guia3.get('1_32')?.hasError(val.type)&&guia3.get('1_32')?.touched">
+                      {{val.message}}
+                    </div>
+                  </ng-container>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <p>Considero que mi trabajo es estable</p>
+                  <ion-select formControlName="1_33" placeholder="Seleccione una Opcion" interface="popover">
+                    <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                    <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                      <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                      <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                      <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                  </ion-select>
+                  <ng-container *ngFor="let val of validationMessages['general']">
+                    <div class="error-message" *ngIf="guia3.get('1_33')?.hasError(val.type)&&guia3.get('1_33')?.touched">
+                      {{val.message}}
+                    </div>
+                  </ng-container>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <p>En mi trabajo puedo expresarme libremente sin interrupciones</p>
+                  <ion-select formControlName="1_34" placeholder="Seleccione una Opcion" interface="popover">
+                    <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                    <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                      <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                      <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                      <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                  </ion-select>
+                  <ng-container *ngFor="let val of validationMessages['general']">
+                    <div class="error-message" *ngIf="guia3.get('1_34')?.hasError(val.type)&&guia3.get('1_34')?.touched">
+                      {{val.message}}
+                    </div>
+                  </ng-container>
+                </ion-col>
+            </ion-row>
+          <!--SECCION 2-->
+
+          <ion-row>
+            <ion-col size="12">
+              <H2>Segunda seccion</H2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Mi trabajo me exige hacer mucho esfuerzo físico</p>
+                <ion-select formControlName="2_1" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_1')?.hasError(val.type)&&guia3.get('2_1')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Me preocupa sufrir un accidente en mi trabajo</p>
+                <ion-select formControlName="2_2" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_2')?.hasError(val.type)&&guia3.get('2_2')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Considero que las actividades que realizo son peligrosas</p>
+                <ion-select formControlName="2_3" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_3')?.hasError(val.type)&&guia3.get('2_3')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Por la cantidad de trabajo que tengo debo quedarme tiempo adicional a mi truno</p>
+                <ion-select formControlName="2_4" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_4')?.hasError(val.type)&&guia3.get('2_4')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Por la cantidad de trabajo que tengo debo trabajar sin parar</p>
+                <ion-select formControlName="2_5" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_5')?.hasError(val.type)&&guia3.get('2_5')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Considero que es necesario mantener un ritmo de trabajo acelerado</p>
+                <ion-select formControlName="2_6" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_6')?.hasError(val.type)&&guia3.get('2_6')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Mi trabajo exige que este muy concentrado</p>
+                <ion-select formControlName="2_7" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_7')?.hasError(val.type)&&guia3.get('2_7')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Mi trabajo requiere que memorice mucha informacion</p>
+                <ion-select formControlName="2_8" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_8')?.hasError(val.type)&&guia3.get('2_8')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>En mi trabajo tengo que tomar desiciones dificiles muy rapido</p>
+                <ion-select formControlName="2_9" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_9')?.hasError(val.type)&&guia3.get('2_9')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Mi trabajo exige que atienda varios asuntos al mismo tiempo</p>
+                <ion-select formControlName="2_10" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_10')?.hasError(val.type)&&guia3.get('2_10')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>En mi trabajo soy responsable de cosas de mucho valor</p>
+                <ion-select formControlName="2_11" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_11')?.hasError(val.type)&&guia3.get('2_11')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>Respondo ante mi jefe por los resultados de toda mi area de trabajo</p>
+                <ion-select formControlName="2_12" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_12')?.hasError(val.type)&&guia3.get('2_12')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p>En el trabajo me dan ordenes contradictorias</p>
+                <ion-select formControlName="2_13" placeholder="Seleccione una Opcion" interface="popover">
+                  <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                  <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                    <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                    <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                    <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+                </ion-select>
+                <ng-container *ngFor="let val of validationMessages['general']">
+                  <div class="error-message" *ngIf="guia3.get('2_13')?.hasError(val.type)&&guia3.get('2_13')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
+            </ion-col>
+          </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Considero que en mi trabajo me piden cosas inecesarias</p>
+              <ion-select formControlName="2_14" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_14')?.hasError(val.type)&&guia3.get('2_14')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Trabajo horas extras mas de tres veces a la semana</p>
+              <ion-select formControlName="2_15" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_15')?.hasError(val.type)&&guia3.get('2_15')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Mi trabajo me exige laborar en dias de descanso, festivos o fines de semana</p>
+              <ion-select formControlName="2_16" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_16')?.hasError(val.type)&&guia3.get('2_16')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Considero que el tiempo en el trabajo es mucho y perjudica mas actividades familiares o personales</p>
+              <ion-select formControlName="2_17" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_17')?.hasError(val.type)&&guia3.get('2_17')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Debo atender asuntos de trabajo cuando estoy en casa</p>
+              <ion-select formControlName="2_18" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_18')?.hasError(val.type)&&guia3.get('2_18')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Pienso en las actividades familiares o personales cuando estoy en mi trabajo</p>
+              <ion-select formControlName="2_19" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_19')?.hasError(val.type)&&guia3.get('2_19')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Pienso que mis responsabilidades familiares afectan mi trabajo</p>
+              <ion-select formControlName="2_20" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_20')?.hasError(val.type)&&guia3.get('2_20')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Los cambios que se presentan en mi trabajo dificultan mi labor</p>
+              <ion-select formControlName="2_21" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_21')?.hasError(val.type)&&guia3.get('2_21')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>En mi trabajo existe continua rotación de personal</p>
+              <ion-select formControlName="2_22" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_22')?.hasError(val.type)&&guia3.get('2_22')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Recibo críticas constantes a mi persona y/o trabajo</p>
+              <ion-select formControlName="2_23" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_23')?.hasError(val.type)&&guia3.get('2_23')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Recibo burlas, calumnias, difamaciones, humillaciones o ridiculizaciones</p>
+              <ion-select formControlName="2_24" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_24')?.hasError(val.type)&&guia3.get('2_24')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Se ignora mi presencia o se me excluye de las reuniones de trabajo y en la toma de decisiones</p>
+              <ion-select formControlName="2_25" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_25')?.hasError(val.type)&&guia3.get('2_25')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Se manipulan las situaciones de trabajo para hacerme parecer un mal trabajador</p>
+              <ion-select formControlName="2_26" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_26')?.hasError(val.type)&&guia3.get('2_26')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Se ignoran mis éxitos laborales y se atribuyen a otros trabajadores</p>
+              <ion-select formControlName="2_27" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_27')?.hasError(val.type)&&guia3.get('2_27')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Me bloquean o impiden las oportunidades que tengo para obtener ascenso o mejora en mi trabajo</p>
+              <ion-select formControlName="2_28" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_28')?.hasError(val.type)&&guia3.get('2_28')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>He presenciado actos de violencia en mi centro detrabajo</p>
+              <ion-select formControlName="2_29" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_29')?.hasError(val.type)&&guia3.get('2_29')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Atiendo clientes o usuarios muy enojados</p>
+              <ion-select formControlName="2_30" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_30')?.hasError(val.type)&&guia3.get('2_30')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Mi trabajo me exige atender personas muy necesitadas de ayuda o enfermas</p>
+              <ion-select formControlName="2_31" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_31')?.hasError(val.type)&&guia3.get('2_31')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Para hacer mi trabajo debo demostrar sentimientos distintos a los mios</p>
+              <ion-select formControlName="2_32" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_32')?.hasError(val.type)&&guia3.get('2_32')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Mi trabajo me exige atender situaciones de violencia</p>
+              <ion-select formControlName="2_33" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_33')?.hasError(val.type)&&guia3.get('2_33')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Comunican tarde los asuntos de trabajo</p>
+              <ion-select formControlName="2_34" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_34')?.hasError(val.type)&&guia3.get('2_34')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Dificultan el logro de los resultados del trabajo</p>
+              <ion-select formControlName="2_35" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_35')?.hasError(val.type)&&guia3.get('2_35')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Cooperan poco cuando se necesita</p>
+              <ion-select formControlName="2_36" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_36')?.hasError(val.type)&&guia3.get('2_36')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Ignoran las sugerencias para mejorar su trabajo</p>
+              <ion-select formControlName="2_37" placeholder="Seleccione una Opcion" interface="popover">
+                <ion-select-option value="SIEMPRE">SIEMPRE</ion-select-option>
+                <ion-select-option value="CASI SIEMPRE">CASI SIEMPRE</ion-select-option>
+                  <ion-select-option value="ALGUNAS VECES">ALGUNAS VECES</ion-select-option>
+                  <ion-select-option value="CASI NUNCA">CASI NUNCA</ion-select-option>
+                  <ion-select-option value="NUNCA">NUNCA</ion-select-option>
+              </ion-select>
+              <ng-container *ngFor="let val of validationMessages['general']">
+                <div class="error-message" *ngIf="guia3.get('2_37')?.hasError(val.type)&&guia3.get('2_37')?.touched">
+                  {{val.message}}
+                </div>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+
+    </ion-grid>
+    <ion-button (click)="enviarGuia_3()" expand="full" [disabled]="!guia3.valid">
+      Click me
+    </ion-button>
+  </form>
+
+</ion-content>
+
+<ion-content *ngIf="res?.Contestada">
+  <h1>La encuesta ya fue contestada</h1>
 </ion-content>
 
 <!--*ngIf=" e.Tipo === 'SI-NO' "-->
