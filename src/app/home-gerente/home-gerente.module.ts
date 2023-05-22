@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { HomeGerentePageRoutingModule } from './home-gerente-routing.module';
 
 import { HomeGerentePage } from './home-gerente.page';
-import { pdfMake } from 'pdfmake/build/vfs_fonts';
 
 
 

@@ -23,6 +23,7 @@ export class HomeGerentePage implements OnInit {
   personaResultados?: Persona;
   resultadosPersona: Respuesta[] = [];
   enabled: boolean=false;
+  cambiarPWD=true;
   admin?: Usuario;
   usrToUpdate?: Usuario; //Toma el valor del indice cuando isModalUpdate es verdadero
   validationMessages;
@@ -91,14 +92,26 @@ export class HomeGerentePage implements OnInit {
         {type: 'minlength', message: 'LONGITUD invalida!'}
       ]
     };
+    this.cargarPersonas();
   }
   ngOnInit() {
     let IdUsuarioOK;
     this.activatedRoute.paramMap.subscribe((params) => {
       IdUsuarioOK = params.get('id');
+      IdUsuarioOK = IdUsuarioOK +'';
+      this.cargarAdmin(IdUsuarioOK); 
+      
     });
-    IdUsuarioOK = IdUsuarioOK +'';
-    this.cargarAdmin(IdUsuarioOK); 
+    
+    
+    if (this.admin.Generated) {
+      this.presentToast('Se requiere ingresar una nueva contraseña','danger');
+    }
+    if (!this.admin.Generated) {
+      
+      this.enabled=true;
+      this.cambiarPWD = false;
+    } 
   }
 
   interpretarResultadosGuia2y3(valor: number, guia: string) : IconColor{
@@ -406,6 +419,7 @@ export class HomeGerentePage implements OnInit {
         this.usrService.updateUser(this.admin).subscribe( data => {
           this.admin = data.userItem;
           this.presentToast('Contraseña actualizada con exito!','success');
+          this.cambiarPWD=false;
         });
       }
     }
@@ -414,11 +428,8 @@ export class HomeGerentePage implements OnInit {
   private cargarAdmin(IdUsuarioOK: string) {
     this.usrService.getUsuarioItem(IdUsuarioOK,'OK').subscribe( data => {
       this.admin = data.userItem;
-      if (this.admin?.Generated) {
-        this.cargarPersonas();
-        this.enabled=true;
-      } 
       this.cargarPersonas();
+      this.cambiarPWD = this.admin.Generated;
     }, error => {
       this.presentToast('Ocurrió un error :(','danger');
     });
