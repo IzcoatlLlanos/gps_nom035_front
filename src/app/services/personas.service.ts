@@ -9,7 +9,7 @@ import { EncuestaPersona } from '../models/encuesta-persona';
 })
 export class PersonasService {
 
-  private url = 'http://localhost:3020/api/v1/personas/'
+  private url = 'https://nom035.herokuapp.com/api/v1/personas/'
 
   constructor(private http: HttpClient) { }
 

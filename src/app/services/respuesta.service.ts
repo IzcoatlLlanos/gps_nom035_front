@@ -9,7 +9,7 @@ import { Seccion } from '../models/seccion';
 })
 export class RespuestaService {
 
-  private url = 'http://localhost:3020/api/v1/respuestas/'
+  private url = 'https://nom035.herokuapp.com/api/v1/respuestas/'
 
   constructor(private http: HttpClient) { }
 

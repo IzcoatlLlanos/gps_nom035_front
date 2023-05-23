@@ -9,7 +9,7 @@ export class EncuestasService {
 
   constructor(private http: HttpClient) { }
 
-  private url = 'http://localhost:3020/api/v1/encuestas/';
+  private url = 'https://nom035.herokuapp.com/api/v1/encuestas/';
 
   getEncuestaItem(idEncuestaOK: string): Observable<any> {
     return this.http.get(this.url+idEncuestaOK);

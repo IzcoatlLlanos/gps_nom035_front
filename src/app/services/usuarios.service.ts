@@ -8,7 +8,7 @@ import { Usuario } from '../models/usuario';
 })
 export class UsuariosService {
 
-  private url = 'http://localhost:3020/api/v1/usuarios/'
+  private url = 'https://nom035.herokuapp.com/api/v1/usuarios/'
 
   constructor(private http: HttpClient) { }
 
